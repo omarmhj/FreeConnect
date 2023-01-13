@@ -40,13 +40,13 @@ pipeline {
 		}
         stage('Build Docker Back Image') {
             steps {
-                sh 'docker build -t ${imageNameBack}:${imageVersionBack} -f back/Dockerfile .'
+                sh 'docker build -t ${imageNameBack}:${imageVersionBack} -f back/Dockerfile ./back'
                 echo 'Building Docker Image Successfuly'
             }
         }
         stage('Build Docker Front Image') {
             steps {
-                sh 'docker build -t ${imageNameFront}:${imageVersionFront} -f front/Dockerfile .'
+                sh 'docker build -t ${imageNameFront}:${imageVersionFront} -f front/Dockerfile ./front'
                 echo 'Building Docker Image Successfuly'
             }
         }
