@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://" + process.env.DB_USER_PASS + "@cluster0.4p6hmep.mongodb.net/test",
+mongoose.connect('mongodb://some-mongo:27017/freeConnect',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

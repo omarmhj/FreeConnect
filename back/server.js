@@ -39,6 +39,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes)
 
 // server 
-app.listen(process.env.PORT, () => {
-    console.log(`server Started at http://localhost:${process.env.PORT}`)
+app.listen(5000, () => {
+    console.log(`server Started at http://localhost:${5000}`)
 })
