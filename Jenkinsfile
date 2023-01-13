@@ -2,9 +2,9 @@ pipeline {
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dh_cred_omar')
 		TAG="0.1.0"
-        imageNameBack='hamza4devops/java-app'
+        imageNameBack='omaar0088/java-app'
 	    imageVersionBack="${BUILD_NUMBER}"
-        imageNameFront='hamza4devops/java-app'
+        imageNameFront='omaar0088/java-app'
         imageVersionFront="${BUILD_NUMBER}"
         PROJECT_NAME='Free Connect'
 	}
