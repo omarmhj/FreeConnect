@@ -19,10 +19,10 @@ pipeline {
     			checkout scm
 			}
   		}
-		stage('Provisionning infra with Treeaform') {
+		stage('Provisionning infrastructure with Terraform') {
 			steps {
                 /*
-				dir ('terraform-provider-aws') {
+				dir ('terraform-provider-azure') {
 					sh 'erraform init -input=false'
 					sh 'terraform plan -input=false -out tfplan'
 				}*/

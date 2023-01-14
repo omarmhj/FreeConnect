@@ -10,7 +10,9 @@ COPY package.json ./
 #runs npm install
 RUN npm install
 
+#copy the application files
 COPY . .
 
 EXPOSE 5000
+
 CMD [ "node", "server.js" ]

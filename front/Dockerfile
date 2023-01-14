@@ -9,6 +9,7 @@ COPY package.json ./
 #runs npm install
 RUN npm install
 
+#copy the application files
 COPY . .
 
 #exposes port 3000
