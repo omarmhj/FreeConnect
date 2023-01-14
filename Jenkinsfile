@@ -1,7 +1,6 @@
 pipeline {
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dh_cred_omar')
-		TAG="0.1.0"
         imageNameBack='omaar0088/omar-back'
 	    imageVersionBack="${BUILD_NUMBER}"
         imageNameFront='omaar0088/omar-front'
@@ -14,11 +13,13 @@ pipeline {
         ansiColor('xterm')
     }
 	stages {
+        
         stage('SCM') {
 			steps {
     			checkout scm
 			}
   		}
+
 		stage('Provisionning infrastructure with Terraform') {
 			steps {
                 /*
@@ -29,6 +30,7 @@ pipeline {
                 echo 'NO Credit In my Account'
 			}
   		}
+
 		stage('Applying infrastructure') {
 			steps {
                 /*
@@ -38,24 +40,28 @@ pipeline {
                 echo 'NO Credit In my Account'
 			}
 		}
+
         stage('Build Docker Back Image') {
             steps {
                 sh 'docker build -t ${imageNameBack}:${imageVersionBack} -f back/Dockerfile ./back'
                 echo 'Building Docker Back Image Successfuly'
             }
         }
+
         stage('Build Docker Front Image') {
             steps {
                 sh 'docker build -t ${imageNameFront}:${imageVersionFront} -f front/Dockerfile ./front'
                 echo 'Building Docker Front Image Successfuly'
             }
         }
+
         stage('Login to Dockerhub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 echo 'Login to Dockerhub Successfuly'
             }
         }
+        
         stage('Push Images to DockerHub') {
             steps {
                 sh 'docker push ${imageNameBack}:${imageVersionBack}'
@@ -64,6 +70,7 @@ pipeline {
                 echo 'Pushing Image ${imageNameFront}:${imageVersionFront} Successfuly'
             }
         }
+
         stage('Clean local env') {
             steps {
                 sh 'docker logout $DOCKERHUB_CREDENTIALS_USR'
@@ -72,14 +79,14 @@ pipeline {
                 echo 'Cleaning Done Successfuly'
             }
         }
-		
-	 stage('Deploy with docker compose') {
+
+	    stage('Deploy with docker compose') {
             steps {
-                sh 'docker-compose -f docker-compose.yaml up -d'
+                sh 'versionBack=${imageVersionBack} versionFront=${imageVersionFront} docker-compose -f docker-compose.yaml up -d'
                 echo 'Successfuly Deployed ${PROJECT_NAME} to docker compose'
             }
         }	
-		
+
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 //sh 'kubectl apply -f kubernetes/ --recursive'
