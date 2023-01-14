@@ -61,7 +61,7 @@ pipeline {
                 echo 'Login to Dockerhub Successfuly'
             }
         }
-        
+
         stage('Push Images to DockerHub') {
             steps {
                 sh 'docker push ${imageNameBack}:${imageVersionBack}'
@@ -70,7 +70,7 @@ pipeline {
                 echo 'Pushing Image ${imageNameFront}:${imageVersionFront} Successfuly'
             }
         }
-/*
+
         stage('Clean local env') {
             steps {
                 sh 'docker logout $DOCKERHUB_CREDENTIALS_USR'
@@ -79,7 +79,7 @@ pipeline {
                 echo 'Cleaning Done Successfuly'
             }
         }
-*/
+        
 	    stage('Deploy with docker compose') {
             steps {
                 sh 'versionBack=${imageVersionBack} versionFront=${imageVersionFront} docker-compose -f docker-compose.yaml up -d'
