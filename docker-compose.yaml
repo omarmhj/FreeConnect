@@ -1,0 +1,44 @@
+version: '3'
+services:
+  some-mongo:
+    image: mongo:6.0.3
+    networks:
+      - omar_net
+    volumes:
+      - mongo-data:/data/db
+      
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment: 
+      - ME_CONFIG_MONGODB_SERVER=some-mongo
+    networks:
+      - omar_net
+
+  
+  back:
+    image: omaar0088/omar-back:3
+    container_name: omaar0088/omar_back
+    ports:
+      - 5000:5000
+    networks:
+      - omar_net
+    depends_on:
+      - some-mongo
+
+  front:
+    image: omaar0088/omar-front:3
+    container_name: omaar0088/omar_front
+    ports:
+      - 3000:3000
+    networks:
+      - omar_net
+
+networks:
+  omar_net:
+    name: omar_net
+    
+volumes:
+  mongo-data:
+    driver: local
