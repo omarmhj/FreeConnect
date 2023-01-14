@@ -2,9 +2,9 @@ pipeline {
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dh_cred_omar')
 		TAG="0.1.0"
-        imageNameBack='omaar0088/omar_back'
+        imageNameBack='omaar0088/omar-back'
 	    imageVersionBack="${BUILD_NUMBER}"
-        imageNameFront='omaar0088/omar_front'
+        imageNameFront='omaar0088/omar-front'
         imageVersionFront="${BUILD_NUMBER}"
         PROJECT_NAME='Free Connect'
 	}
@@ -72,6 +72,14 @@ pipeline {
                 echo 'Cleaning Done Successfuly'
             }
         }
+		
+	 stage('Deploy with docker compose') {
+            steps {
+                sh 'docker-compose -f docker-compose.yaml up -d'
+                echo 'Successfuly Deployed ${PROJECT_NAME} to docker compose'
+            }
+        }	
+		
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 //sh 'kubectl apply -f kubernetes/ --recursive'
